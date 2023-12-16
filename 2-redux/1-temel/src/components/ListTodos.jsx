@@ -9,6 +9,7 @@ const ListTodos = () => {
   // bunun için => store.reducerİsmi yamamız gerekiyor
   const store = useSelector((store) => store.todoReducer);
 
+  console.log(store.todos);
   return (
     <div>
       {store.todos.map((todo) => (

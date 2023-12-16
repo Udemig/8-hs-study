@@ -41,6 +41,8 @@ const todoReducer = (state = initialState, action) => {
 
       return { ...state, todos: newTodos };
 
+    case ActionTypes.SET_TODOS:
+      return { ...state, todos: action.payload };
     // eğerki gelen akiyon yuakrdakilerden hiçibiri değilse state'i değiştirme
     default:
       return state;
