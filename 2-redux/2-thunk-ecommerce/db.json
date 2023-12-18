@@ -189,34 +189,7 @@
       "price": 1500,
       "stockAmount": 50,
       "image": "https://picsum.photos/201",
-      "amount": 8
-    },
-    {
-      "id": 2,
-      "make": "ABC",
-      "model": "B2",
-      "price": 3000,
-      "stockAmount": 30,
-      "image": "https://picsum.photos/202",
-      "amount": 10
-    },
-    {
-      "id": 14,
-      "make": "QRS",
-      "model": "G7",
-      "price": 120,
-      "stockAmount": 80,
-      "image": "https://picsum.photos/207",
-      "amount": 1
-    },
-    {
-      "id": 7,
-      "make": "TUV",
-      "model": "H8",
-      "price": 800,
-      "stockAmount": 15,
-      "image": "https://picsum.photos/208",
-      "amount": 1
+      "amount": 12
     }
   ]
 }

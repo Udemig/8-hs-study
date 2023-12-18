@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../components/Loading';
 import Card from '../components/Card';
+import { getBasket } from '../redux/actions/basketActions';
 
 const MainPage = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const MainPage = () => {
 
   useEffect(() => {
     dispatch(getProducts());
+    dispatch(getBasket());
   }, []);
 
   return (
@@ -33,8 +35,8 @@ const MainPage = () => {
 
       <div className="d-flex flex-wrap gap-5 justify-content-center my-5">
         {/* verileri yüklendiyse ve hata yoksa ekrana bas */}
-        {state.products.map((product) => (
-          <Card product={product} key={product.id} />
+        {state.products.map((product, i) => (
+          <Card product={product} key={i} />
         ))}
       </div>
     </div>

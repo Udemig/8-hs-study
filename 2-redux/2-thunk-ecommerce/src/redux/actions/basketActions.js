@@ -37,9 +37,36 @@ export const addToBasket = (product) => (dispatch) => {
     // 4) store'a yeni ürünü ekle
     .then(() => {
       // todo > aksiyonu tammala
-      //   dispatch({
-      //     type: ActionTypes.ADD_TO_BASKET,
-      //     payload: newProduct,
-      //   });
+      dispatch({
+        type: ActionTypes.ADD_TO_BASKET,
+        payload: newProduct,
+      });
+    });
+};
+
+// septte olan elemanın miktarını 1 arttırır
+export const updateItem = (product) => (dispatch) => {
+  axios
+    .patch(`http://localhost:3050/basket/${product.id}`, {
+      amount: product.amount + 1,
+    })
+    .then(() => {
+      dispatch({
+        type: ActionTypes.UPDATE_ITEM,
+        payload: product.id,
+      });
+    });
+};
+
+// sepetteki elemanı siler
+export const deleteItem = (id) => (dispatch) => {
+  axios
+    .delete(`http://localhost:3050/basket/${id}`)
+    // api isteği başarılı olursa store'dan kaldır
+    .then(() => {
+      dispatch({
+        type: ActionTypes.REMOVE_ITEM,
+        payload: id,
+      });
     });
 };

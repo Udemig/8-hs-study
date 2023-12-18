@@ -13,6 +13,12 @@ const BasketPage = () => {
     dispatch(getBasket());
   }, []);
 
+  // ürünlerin toplam fiyatını hesaplama
+  const totalPrice = state.basket.reduce(
+    (total, i) => total + i.price * i.amount,
+    0
+  );
+
   return (
     <div className="row px-4 py-5">
       {state.isLoading && <Loading />}
@@ -31,7 +37,7 @@ const BasketPage = () => {
 
       <div className="col-md-4">
         <div className="bg-white p-5 rounded w-100 text-black">
-          <h5 className="text-center">Toplam Tutar: 12313</h5>
+          <h5 className="text-center">Toplam Tutar: {totalPrice}</h5>
           <button className="w-100 my-2">Alışverişi Tamamla</button>
         </div>
       </div>
