@@ -3,14 +3,27 @@ import {
   TileLayer,
   Marker,
   Popup,
+  Polyline,
 } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { icon } from 'leaflet';
+import { clear } from '../redux/slices/flightSlice';
 
-const MapView = () => {
+const MapView = ({ openModal }) => {
+  const state = useSelector((store) => store);
+  const dispatch = useDispatch();
+
+  // ikon oluşturma
+  const planeIcon = icon({
+    iconUrl: '/plane-i.png',
+    iconSize: [30, 30],
+  });
+
   return (
     <MapContainer
-      center={[51.505, -0.09]}
-      zoom={12}
+      center={[39.149702, 35.420686]}
+      zoom={6}
       scrollWheelZoom={true}
     >
       {/* ekranda gösterilen harita */}
@@ -19,10 +32,26 @@ const MapView = () => {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {/* imleç */}
-      <Marker position={[51.505, -0.09]}>
-        <Popup>Merhabalar</Popup>
-      </Marker>
+      {state.flights.map((flight) => (
+        <Marker icon={planeIcon} position={[flight.lat, flight.lng]}>
+          <Popup>
+            <div className="popup">
+              <span>Kod: {flight.code}</span>
+              <button onClick={() => openModal(flight.id)}>
+                Detay
+              </button>
+
+              {state.trail.length > 0 && (
+                <button onClick={() => dispatch(clear())}>
+                  Rotayı Temizle
+                </button>
+              )}
+            </div>
+          </Popup>
+        </Marker>
+      ))}
+
+      <Polyline positions={state.trail} />
     </MapContainer>
   );
 };

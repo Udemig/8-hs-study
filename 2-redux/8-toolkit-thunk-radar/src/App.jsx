@@ -4,13 +4,30 @@ import ListView from './pages/ListView';
 import MapView from './pages/MapView';
 import { useDispatch } from 'react-redux';
 import { getFlights } from './redux/actions/flightAction';
+import Modal from './components/Modal';
 
 function App() {
   const [isMapView, setIsMapView] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+  const [detailId, setDetailId] = useState(null);
   const dispatch = useDispatch();
 
+  // modalı açar
+  const openModal = (id) => {
+    setDetailId(id); // hangi uçak için açıldığının state'i
+    setIsOpen(true); // modalı'ı açar
+  };
+
+  // odal'ı kapatır
+  const closeModal = () => {
+    setDetailId(null);
+    setIsOpen(false);
+  };
+
   useEffect(() => {
-    dispatch(getFlights());
+    setInterval(() => {
+      dispatch(getFlights());
+    }, 5000);
   }, []);
 
   return (
@@ -33,7 +50,16 @@ function App() {
       </div>
 
       {/* hangi bileşenin ekran ageliceğini belirleme */}
-      {isMapView ? <MapView /> : <ListView />}
+      {isMapView ? (
+        <MapView openModal={openModal} />
+      ) : (
+        <ListView openModal={openModal} />
+      )}
+
+      {/* modal bileşeni */}
+      {isOpen && (
+        <Modal detailId={detailId} closeModal={closeModal} />
+      )}
     </>
   );
 }
