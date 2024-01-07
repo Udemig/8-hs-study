@@ -1,7 +1,11 @@
 import millify from 'millify';
 import { FaBitcoin } from 'react-icons/fa';
+import CardView from './CardView';
+import { useNavigate } from 'react-router-dom';
 
 const MainPageView = ({ coins, setPage }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="container-xl mt-5">
       <h4 className="d-flex align-items-center gap-3">
@@ -14,6 +18,14 @@ const MainPageView = ({ coins, setPage }) => {
         dijital varlıkları takip etmek için mükemmel bir kaynaktır
       </p>
 
+      {/* kartlar */}
+      <div className="d-flex gap-4 justify-content-around my-5">
+        {coins.slice(0, 3).map((data) => (
+          <CardView key={data.id} data={data} />
+        ))}
+      </div>
+
+      {/* tablo */}
       <table className="table table-dark table-hover table-responsive mt-5">
         <thead>
           <tr>
@@ -27,7 +39,10 @@ const MainPageView = ({ coins, setPage }) => {
         </thead>
         <tbody>
           {coins.map((coin) => (
-            <tr>
+            <tr
+              key={coin.id}
+              onClick={() => navigate(`/coin/${coin.id}`)}
+            >
               <td>{coin.rank}</td>
               <td>
                 <span className="text-warning fw-bold me-2">
