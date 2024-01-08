@@ -5,6 +5,7 @@ import { initializeApp } from 'firebase/app';
 
 //! İMPORT Edilecek
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -24,3 +25,6 @@ export const auth = getAuth(app);
 
 //! google sağlayıcısının kurulumunu
 export const provider = new GoogleAuthProvider();
+
+// veritbanın referansını al
+export const db = getFirestore(app);

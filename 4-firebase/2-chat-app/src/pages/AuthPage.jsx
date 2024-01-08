@@ -1,21 +1,30 @@
 import { auth, provider } from '../firebase/config';
 import { signInWithPopup } from 'firebase/auth';
-import { useState } from 'react';
 
-const AuthPage = () => {
+const AuthPage = ({ setIsAuth }) => {
   // giriş butonuna tıklanınca
   const handleClick = () => {
-    signInWithPopup(auth, provider).then((data) => {});
+    signInWithPopup(auth, provider)
+      // başarıyla giriş yapılırsa:
+      .then((data) => {
+        // state'i güncelle
+        setIsAuth(true);
+        // token'i local'de sakla
+        localStorage.setItem('TOKEN', data.user.refreshToken);
+      });
   };
 
   return (
-    <div>
-      <div>
+    <div className="container">
+      <div className="auth">
         <h1>Chat Odası</h1>
 
         <p>Devam Etmek İçin Giriş Yapın</p>
 
-        <button onClick={handleClick}>Google ile Gir</button>
+        <button onClick={handleClick}>
+          <img src="/g-logo.png" />
+          <span>Google ile Gir</span>
+        </button>
       </div>
     </div>
   );
