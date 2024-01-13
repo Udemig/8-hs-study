@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { auth } from './../firebase/config';
+import { auth, provider } from './../firebase/config';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
+  signInWithPopup,
 } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -51,6 +52,12 @@ const AuthPage = () => {
     });
   };
 
+  // google hesabı ile oturum açma
+  const loginWithGoogle = () => {
+    signInWithPopup(auth,provider)
+    .then(() => navigate("/home"))
+  }
+
   return (
     <section className="h-screen grid place-items-center">
       <div className="bg-black flex flex-col gap-10 py-16 px-32 rounded-lg">
@@ -64,7 +71,7 @@ const AuthPage = () => {
         </h1>
 
         {/* google butonu */}
-        <button className="flex items-center bg-white py-2 px-10 rounded-full text-black gap-3 transition hover:bg-gray-300">
+        <button onClick={loginWithGoogle} className="flex items-center bg-white py-2 px-10 rounded-full text-black gap-3 transition hover:bg-gray-300">
           <img className="h-[20px]" src="/google-logo.svg" />
           <span className="whitespace-nowrap">
             Google ile Giriş Yap

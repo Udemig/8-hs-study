@@ -3,6 +3,7 @@ import { initializeApp } from 'firebase/app';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -22,3 +23,6 @@ export const auth = getAuth(app);
 
 // google sağlaycısının referansını alma
 export const provider = new GoogleAuthProvider();
+
+// veritbanı referanısnı al
+export const db = getFirestore(app);
