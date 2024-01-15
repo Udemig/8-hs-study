@@ -20,7 +20,7 @@ const Main = ({ user }) => {
     const q = query(tweetsCol, orderBy('createdAt', 'desc'));
 
     const unsub = onSnapshot(q, (snapshot) => {
-      // geçici dizi
+      // geçici dizinp
       const tempTweets = [];
 
       // bütün dökümanları dön

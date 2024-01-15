@@ -4,13 +4,34 @@ import {
   collection,
   serverTimestamp,
 } from 'firebase/firestore';
-import { db } from '../firebase/config';
+import { db, storage } from '../firebase/config';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { v4 } from 'uuid';
+import { toast } from 'react-toastify';
+import { useState } from 'react';
+import Spinner from './Spinner';
 
 const Form = ({ user }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   // tweets kolleksiyonun refernasını al
   const tweetsCol = collection(db, 'tweets');
 
-  console.log(user);
+  // dosya eğer resimse, resmi storage'a yükle
+  // resmin url'ini fonksiyonun çağrldığı yere döndür
+  const uploadImage = async (file) => {
+    // 1) dosya resim değilse fonksiyonu durdur
+    if (!file || !file.type.startsWith('image')) return null;
+
+    // 2) dosyanın yükleneceği yerin referansını oluştur
+    const fileRef = ref(storage, v4() + file.name);
+
+    // 3) referansını oluşturğumuz yere dosyayı yükle
+    await uploadBytes(fileRef, file);
+
+    // 4) yüklenen dosyanın url'ine eriş
+    return await getDownloadURL(fileRef);
+  };
 
   // formun gönderilmesi
   const handleSubmit = async (e) => {
@@ -19,10 +40,19 @@ const Form = ({ user }) => {
     const textContent = e.target[0].value;
     const imageContent = e.target[1].files[0];
 
+    // yazı veya resim içeriği yoksa uyarı ver
+    if (!textContent && !imageContent)
+      return toast.info('Lütfen içerik giriniz');
+
+    setIsLoading(true);
+
+    // resmi yükle
+    const url = await uploadImage(imageContent);
+
     // tweets kolleksiyonuna yeni döküman ekle
     await addDoc(tweetsCol, {
       textContent,
-      imageContent: null,
+      imageContent: url,
       createdAt: serverTimestamp(),
       user: {
         id: user.uid,
@@ -32,6 +62,12 @@ const Form = ({ user }) => {
       likes: [],
       isEdited: false,
     });
+
+    // formu sıfırla
+    e.target.reset();
+
+    // yüklenmeyi sonlandır
+    setIsLoading(false);
   };
 
   return (
@@ -62,8 +98,11 @@ const Form = ({ user }) => {
 
           <input className="hidden" id="image-input" type="file" />
 
-          <button className="bg-blue-600 flex items-center justify-center px-4 py-2 min-w-[85px] min-h-[40px] rounded-full transition hover:bg-blue-800">
-            Tweetle
+          <button
+            disabled={isLoading}
+            className="bg-blue-600 flex items-center justify-center px-4 py-2 min-w-[85px] min-h-[40px] rounded-full transition hover:bg-blue-800"
+          >
+            {isLoading ? <Spinner /> : 'Tweetle'}
           </button>
         </div>
       </div>
