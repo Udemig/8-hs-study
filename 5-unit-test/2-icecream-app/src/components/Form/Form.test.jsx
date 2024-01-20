@@ -32,7 +32,7 @@ test('Koşulların onaylanmasına göre buton aktifliği', async () => {
   expect(button).toBeDisabled();
 });
 
-test('Onay butonu hover durumuna göre bildirim gözükür', () => {
+test('Onay butonu hover durumuna göre bildirim gözükür', async () => {
   const user = userEvent.setup();
 
   render(<Form />);
@@ -52,8 +52,20 @@ test('Onay butonu hover durumuna göre bildirim gözükür', () => {
   const popup = screen.getByText(/size gerçekten/i); // i > insensetive
 
   // 1) checkbox tikle
+  await user.click(checkBox);
+
   // 2) bildirim gözükmüyor mu?
+  expect(popup).not.toBeVisible(); // opacity > 0 || display !== none || visibty !== hidden
+
   // 3) mouse butonuna üzerine götür
+  fireEvent.mouseEnter(button);
+
   // 4) bildiirim gözükuyor mu?
-  // 5) mouse'u butonun üzerinden götür
+  expect(popup).toBeVisible();
+
+  // 5) mouse'u butonun üzerinden çek
+  fireEvent.mouseLeave(button);
+
+  // 6) bildiirim gözükmüyor mu?
+  expect(popup).not.toBeVisible();
 });
