@@ -26,7 +26,9 @@ const Card = ({ item, basket, setBasket }) => {
           Sıfırla
         </button>
 
-        <span className="fs-2">{amount}</span>
+        <span data-testid="amount" className="fs-2">
+          {amount}
+        </span>
 
         <button
           onClick={() => setBasket([...basket, item])}
