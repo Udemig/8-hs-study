@@ -72,3 +72,41 @@ class Kisi {
 const kisi = new Kisi();
 
 console.log(kisi.fullname);
+
+//! Örnek
+class Circle {
+  private _radius: number;
+
+  constructor(new_radius: number) {
+    this._radius = new_radius;
+  }
+
+  // get methodu ile radius özelliğine erişme
+  get radius() {
+    return this._radius;
+  }
+
+  // get methodu ile alanı hesaplama
+  get area() {
+    return Math.PI * this._radius * this._radius;
+  }
+
+  // set methodu
+  set radius(value: number) {
+    if (value < 0) {
+      console.log('Geçersiz yarıçap. Negatif olamaz');
+      return;
+    }
+
+    this._radius = value;
+  }
+}
+
+const circle = new Circle(40);
+
+console.log(circle.radius);
+console.log(circle.area);
+
+circle.radius = -20;
+
+console.log(circle.radius);
