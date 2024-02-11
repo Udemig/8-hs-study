@@ -1,9 +1,14 @@
+import { MouseEventHandler } from 'react';
+
 // Tip Tanımı
 export type ButtonPropsType = {
   disabled?: boolean;
   designs?: string;
   btnType?: 'submit' | 'reset' | 'button';
   title: string;
+  rIcon?: string;
+  // tıklanma olayında çalışan fonksiyon
+  handleClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
 // api'dan gelen araç verisnin tipi

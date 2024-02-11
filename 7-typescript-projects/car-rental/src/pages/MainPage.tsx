@@ -5,6 +5,7 @@ import SearchBar from '../components/SearchBar';
 import { fetchCars } from '../utils/fetchCars';
 import { CarType } from '../types';
 import Card from './../components/Card/index';
+import { useSearchParams } from 'react-router-dom';
 
 const MainPage = () => {
   // useState bizden state'de tutucağımız verinin tipini ister
@@ -13,13 +14,20 @@ const MainPage = () => {
   const [cars, setCars] = useState<CarType[] | null>(null);
   const [isError, setIsError] = useState<boolean>(false);
 
+  // urldeki arama parametrelerine erişme
+  const [params] = useSearchParams();
+
+  // parametreler her değiştiğinde api isteği atıyoruz
   useEffect(() => {
-    fetchCars()
+    // url'deki bütün arama parametrelerini objeye çevirdik
+    const paramsObj = Object.fromEntries(params.entries());
+
+    fetchCars(paramsObj)
       // istek başarılı olursa:
       .then((data) => setCars(data))
       // istek başarısız olursa:
       .catch(() => setIsError(true));
-  }, []);
+  }, [params]);
 
   return (
     <div>
