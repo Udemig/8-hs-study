@@ -2,6 +2,7 @@ import ReactSelect from 'react-select';
 import { makes } from '../../constants';
 import { FormEvent, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { OptionType } from '../../types';
 
 // 1.Bileşen
 const SearchButton = ({ designs }: { designs: string }) => (
@@ -16,11 +17,6 @@ const SearchBar = () => {
   const [model, setModel] = useState<string>('');
 
   const [searchParams, setSearchParams] = useSearchParams();
-
-  type OptionType = {
-    label: string;
-    value: string;
-  };
 
   /*
    * Markalar dizisini select kütüphanesinin isteği formata
@@ -50,6 +46,7 @@ const SearchBar = () => {
     <form onSubmit={handleSubmit} className="searchbar gap-3">
       <div className="searchbar__item">
         <ReactSelect
+          defaultInputValue={searchParams.get('make')!}
           onChange={(e) => e && setMake(e.value)}
           className="w-full text-black"
           options={options}
@@ -66,6 +63,7 @@ const SearchBar = () => {
         />
 
         <input
+          defaultValue={searchParams.get('model')!}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setModel(e.target.value)
           }

@@ -6,6 +6,8 @@ import { fetchCars } from '../utils/fetchCars';
 import { CarType } from '../types';
 import Card from './../components/Card/index';
 import { useSearchParams } from 'react-router-dom';
+import ShowMore from '../components/ShowMore';
+import { fuels, years } from '../constants';
 
 const MainPage = () => {
   // useState bizden state'de tutucağımız verinin tipini ister
@@ -46,8 +48,16 @@ const MainPage = () => {
         <div className="home__filters">
           <SearchBar />
           <div className="home__filter-container">
-            <CustomFilter />
-            <CustomFilter />
+            <CustomFilter
+              paramName={'fuel_type'}
+              title="Yakıt Tipi"
+              options={fuels}
+            />
+            <CustomFilter
+              paramName={'year'}
+              title="Üretim Yılı"
+              options={years}
+            />
           </div>
         </div>
 
@@ -78,6 +88,8 @@ const MainPage = () => {
                 <Card key={i} car={car} />
               ))}
             </div>
+
+            <ShowMore />
           </section>
         )}
       </div>
