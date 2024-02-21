@@ -3,7 +3,7 @@
     {
       "id": "9634255f-bf38-4db7-a44c-ce20601a8be8",
       "text": "123",
-      "is_done": true,
+      "is_done": false,
       "created_at": "12/16/2023"
     },
     {
@@ -14,14 +14,14 @@
     },
     {
       "id": "7688eb70-98e5-469d-8488-346eba67c655",
-      "text": "asd",
+      "text": "asd123",
       "is_done": false,
       "created_at": "12/16/2023"
     },
     {
       "id": "8d1d9454-99c6-4da0-808c-fac972320b7e",
       "text": "sad",
-      "is_done": false,
+      "is_done": true,
       "created_at": "12/16/2023"
     },
     {
